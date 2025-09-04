@@ -341,7 +341,7 @@ if __name__ == '__main__':
         }
         """
 
-    r = requests.post(API_URL, json={'query': QUERY_STR},
-                    headers={'Authorization': f'Bearer {token}'})
-    df = DataFrame(json.loads(r.text)['data']['available'])
-    df.head()
+    # r = requests.post(API_URL, json={'query': QUERY_STR},
+    #                 headers={'Authorization': f'Bearer {token}'})
+    # df = DataFrame(json.loads(r.text)['data']['available'])
+    # df.head()
