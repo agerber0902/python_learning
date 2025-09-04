@@ -1,0 +1,46 @@
+-- SETUP --
+
+1. Created venv using
+    python3 -m venv .venv
+2. Activate with
+    source .venv/bin/activate
+3. Tell VS Code to Use It
+
+    Press Ctrl+Shift+P (or Cmd+Shift+P on Mac).
+
+    Search for “Python: Select Interpreter”.
+
+    Pick your .venv environment (something like .venv/bin/python or .venv\Scripts\python.exe).
+
+    Now VS Code will use that environment for debugging, running, and installing packages.
+
+4. Install Packages
+
+-- TEST SCRIPT --
+1. Make sure vev is running (Setup Step #2) NOTE: This should happen automatically when we open the terminal
+2. Install any libraries needed
+3. There is no need for a src folder, or any file structure.
+4. Create all scripts outside the venv - that is just the env and packages
+5. I not creating a src folder, but i will create folders to keep things straight
+6. Run the script file:
+    if at root: python test_script.py
+    if in folder: python folder/test_script.py
+7. Make sure this is included:
+    if __name__ == "__main__":   # <- this part is important
+    main()
+8. then do:
+    def main(): ....
+
+-- DEV Kit Setup / Chapter 3
+1. Create folder structure, add utilities.py and config.ini to folder
+2. Python runs everything from the root folder, so when getting info from other files, we need the full path
+    here = Path(__file__).parent
+    config_path = here / "config.ini"
+3. Unless we want the config.ini in the root, then we dont need step #2
+
+-- Separate folders --
+1. create folder /config
+2. add file __init__.py and leave it empty
+3. create file config_loader.py
+4. Access in other scripts as 
+    from config.config_loader.py import ...
