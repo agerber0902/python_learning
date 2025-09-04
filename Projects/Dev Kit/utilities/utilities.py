@@ -15,6 +15,8 @@ def _check_arg(name, arg, allowed, none_ok=False):
     if not ((arg in allowed) or (none_ok and arg is None)):
         raise ValueError(f"Invalid {name} argument. Needs to be in {allowed}.")
 
+
+
 if __name__ == '__main__':
       printInfo(f"Running Chapter 3 utilities.py...")
       printInfo(f"Config sdk values: {LICENSE_KEY} | {OUTPUT_PATH} | {DB_PATH}")

@@ -44,3 +44,8 @@
 3. create file config_loader.py
 4. Access in other scripts as 
     from config.config_loader.py import ...
+
+
+-- General Notes --
+1. DataFrames.head() is like a sample
+2. ** works like spread

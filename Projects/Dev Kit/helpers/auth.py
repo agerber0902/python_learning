@@ -49,7 +49,7 @@ def validate(API_URL, token):
     r = requests.post(API_URL, json={'query': query_validate},
                   headers={'Authorization': f'Bearer {token}'})
     response = json.loads(r.text)['data']
-    if response['validate']['validated'] == True:
+    if response['validate']['validated']:
         printSuccess(response)
     else:
         printInfo(response)
