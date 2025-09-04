@@ -1,14 +1,14 @@
-from config.config_loader import LICENSE_KEY, OUTPUT_PATH, DB_PATH
-from config.auth import get_token
+from helpers.config_helper import LICENSE_KEY, OUTPUT_PATH, DB_PATH
+from helpers.auth import get_token
 import requests
-from pandas import DataFrame, Series
+from pandas import DataFrame
 import pandas as pd
 import json
 from textwrap import dedent
+from helpers.helper import printInfo
 
 # constants
-API_URL = 'https://api.sims.fantasymath.com'
-SEASON = 2025
+from helpers.constants import FANTASY_MATH_API_URL, SEASON
 
 # Helper function to make sure argument is allowed
 def _check_arg(name, arg, allowed, none_ok=False):
@@ -16,11 +16,11 @@ def _check_arg(name, arg, allowed, none_ok=False):
         raise ValueError(f"Invalid {name} argument. Needs to be in {allowed}.")
 
 if __name__ == '__main__':
-      print(f"Running Chapter 3 utilities.py...")
-      print(f"Config sdk values: {LICENSE_KEY} | {OUTPUT_PATH} | {DB_PATH}")
+      printInfo(f"Running Chapter 3 utilities.py...")
+      printInfo(f"Config sdk values: {LICENSE_KEY} | {OUTPUT_PATH} | {DB_PATH}")
 
       # Get Token
-      token = get_token(API_URL, LICENSE_KEY)
+      token = get_token(FANTASY_MATH_API_URL, LICENSE_KEY)
 
       # GraphQL
       # raw graphql example
@@ -36,7 +36,7 @@ if __name__ == '__main__':
             }}
             """
 
-      r = requests.post(API_URL, json={'query': QUERY_STR},
+      r = requests.post(FANTASY_MATH_API_URL, json={'query': QUERY_STR},
                         headers={'Authorization': f'Bearer {token}'})
 
       df = DataFrame(json.loads(r.text)['data']['available'])

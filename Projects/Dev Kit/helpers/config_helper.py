@@ -1,21 +1,22 @@
 from pathlib import Path
 from configparser import ConfigParser
 
+from helpers.helper import setErrorMessage
+
 # Set up path for config.ini
-here = Path(__file__).parent # Save the parent name
-config_path = here / "config.ini"
+config_path = "config.ini"
 
 # config error handling
-if not config_path.exists():
-	raise FileNotFoundError(f"❌ Config file not found at {config_path}")
+if not Path(config_path).exists():
+	raise FileNotFoundError(setErrorMessage(f"Config file not found at {config_path}"))
 if not Path(config_path).is_file():
-      raise FileNotFoundError(f"❌ Config file not found at {config_path}")
+      raise FileNotFoundError(setErrorMessage(f"Config file not found at {config_path}"))
 
 # Read the config file
 config = ConfigParser(interpolation=None)
 files_read = config.read(config_path)
 if not files_read:
-    print(f"❌ '{config_path}' not found or could not be read.")
+    raise FileNotFoundError(setErrorMessage(f"'{config_path}' not found or could not be read."))
 
 # Read the config values
 LICENSE_KEY = config['sdk']['LICENSE_KEY']

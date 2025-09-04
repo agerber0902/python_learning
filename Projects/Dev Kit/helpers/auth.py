@@ -4,6 +4,7 @@
 from textwrap import dedent
 import requests
 import json
+from helpers.helper import setErrorMessage, printInfo, printSuccess
 
 # Only import this, it calls both functions and retuns the token
 def get_token(API_URL, LICENSE_KEY):
@@ -11,12 +12,12 @@ def get_token(API_URL, LICENSE_KEY):
     response = validate(API_URL, token)
 
     if response['validate']['validated'] != True:
-        raise PermissionError(f"❌ Token is invalid.")
+        raise PermissionError(setErrorMessage(f"Token is invalid."))
     
     return token
 
 def generate_token(API_URL, license):
-    print(f"Attempting to generate token for {API_URL} with key {license}")
+    printInfo(f"Attempting to generate token for {API_URL} with key {license}")
 
     query_token = dedent(
         f"""
@@ -31,11 +32,11 @@ def generate_token(API_URL, license):
 
     r = requests.post(API_URL, json={'query': query_token})
     token = json.loads(r.text)['data']['token']
-    print(f"{token}")
+    printSuccess(f"Token: {token}")
     return token
 
 def validate(API_URL, token):
-    print(f"Attempting to validate token for {API_URL} with token {token}")
+    printInfo(f"Attempting to validate token for {API_URL} with token {token}")
     query_validate = ("""
                       query {
                         validate {
@@ -48,5 +49,8 @@ def validate(API_URL, token):
     r = requests.post(API_URL, json={'query': query_validate},
                   headers={'Authorization': f'Bearer {token}'})
     response = json.loads(r.text)['data']
-    print(response)
+    if response['validate']['validated'] == True:
+        printSuccess(response)
+    else:
+        printInfo(response)
     return response
